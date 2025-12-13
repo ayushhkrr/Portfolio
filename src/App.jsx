@@ -19,6 +19,7 @@ import {
   Copy,
   Check,
   Download,
+  Phone,
 } from "lucide-react";
 
 const MatrixRain = () => {
@@ -604,6 +605,23 @@ const NotionPortfolio = () => {
                       </p>
                     </div>
                   </a>
+
+                  <a
+                    href="tel:+919835707452"
+                    className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md hover:scale-105 transition-all duration-400 ease-out group"
+                  >
+                    <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-600">
+                      <Phone size={18} />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500 font-medium uppercase">
+                        Phone
+                      </p>
+                      <p className="font-semibold text-gray-900">
+                        +91 9835707452
+                      </p>
+                    </div>
+                  </a>
                 </div>
               </div>
 
@@ -657,8 +675,7 @@ const NotionPortfolio = () => {
         <FadeIn delay={1000}>
           <div className="text-center text-gray-400 text-sm pb-8 pt-8">
             <p>
-              © {new Date().getFullYear()} Ayush Kumar. Crafted with React &
-              Tailwind.
+              © {new Date().getFullYear()} Ayush Kumar. Crafted with 💝
             </p>
           </div>
         </FadeIn>
