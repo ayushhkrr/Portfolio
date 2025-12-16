@@ -252,8 +252,8 @@ const NotionPortfolio = () => {
             Contact
           </a>
           <a
-            href="/Resume.pdf" // Ensure Resume.pdf is in your 'public' folder
-            download="Ayush_Kumar_Resume.pdf"
+            href="/CV.pdf" // Ensure Resume.pdf is in your 'public' folder
+            download="Ayush_Kumar_CV.pdf"
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 hover:scale-105 transition-all duration-300 ease-out material-btn"
