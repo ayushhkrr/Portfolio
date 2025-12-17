@@ -275,7 +275,7 @@ const NotionPortfolio = () => {
       <div className="max-w-5xl mx-auto px-6 sm:px-8 md:px-12 relative -mt-20 z-10">
         {/* Profile Header Card - Material Card */}
         <FadeIn delay={100}>
-          <div className="bg-white rounded-2xl p-8 material-shadow mb-12 relative overflow-hidden border border-gray-50">
+          <div className="bg-white rounded-2xl p-8 material-shadow mb-12 relative border border-gray-50">
             <div className="flex flex-col md:flex-row gap-8 items-start">
               {/* Profile Image with Ring */}
               <div className="relative shrink-0">
