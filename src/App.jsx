@@ -115,7 +115,7 @@ const NotionPortfolio = () => {
       image: "/promptverse.jpeg",
       tags: ["React", "Node.js", "MongoDB", "Stripe"],
       desc: "A full-featured marketplace for AI prompts. Implemented JWT auth, protected routes, and role-based access. Integrated Stripe for payments and optimized API latency.",
-      liveLink: "https://prompt-verse-omega.vercel.app",
+      liveLink: "https://pro-universe.vercel.app/",
       repoLink: "https://github.com/ayushhkrr/promptverse",
     },
     {
@@ -123,7 +123,7 @@ const NotionPortfolio = () => {
       image: "/urlshortner.jpeg",
       tags: ["React", "Vite", "Express", "Rest API"],
       desc: "A robust URL shortening application. Features custom alias generation, QR codes, and click tracking. Backend deployed on Render, Frontend on Vercel.",
-      liveLink: "https://url-shortener-eight-pink.vercel.app",
+      liveLink: "https://u-inventor.vercel.app/",
       repoLink: "https://github.com/ayushhkrr/URL-Shortener",
     },
     {
@@ -131,7 +131,7 @@ const NotionPortfolio = () => {
       image: "/submanager.jpeg",
       tags: ["Node.js", "Cron Jobs", "Security", "Stripe"],
       desc: "Automated subscription tracking system. Uses Cron jobs for renewal reminders and Stripe webhooks for status updates. Built with heavy focus on API security.",
-      liveLink: "https://sub-man-seven.vercel.app",
+      liveLink: "https://sub-man.vercel.app/",
       repoLink: "https://github.com/ayushhkrr/Subs-Manager",
     },
   ];
