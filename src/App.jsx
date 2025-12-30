@@ -83,24 +83,18 @@ const MatrixRain = () => {
 
 const NotionPortfolio = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(profile.email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const profile = {
     name: "Ayush Kumar",
     role: "Full Stack JavaScript Developer",
     tagline: "Web Developer | MERN Stack",
     location: "Chandigarh, India",
-    email: "ayushhkrr@gmail.com",
+    email: "aayuwavee@gmail.com",
     socials: {
       linkedin: "https://linkedin.com/in/ayush-kumar-a1935b331",
       github: "https://github.com/ayushhkrr",
@@ -129,7 +123,7 @@ const NotionPortfolio = () => {
     {
       title: "Subscription Manager",
       image: "/submanager.jpeg",
-      tags: ["Node.js", "Cron Jobs", "Security", "Stripe"],
+      tags: ["Node.js", "Express", "Security", "Stripe"],
       desc: "Automated subscription tracking system. Uses Cron jobs for renewal reminders and Stripe webhooks for status updates. Built with heavy focus on API security.",
       liveLink: "https://sub-man.vercel.app/",
       repoLink: "https://github.com/ayushhkrr/Subs-Manager",
@@ -183,6 +177,196 @@ const NotionPortfolio = () => {
     );
   };
 
+  const ProjectCard = ({ project, idx }) => {
+    const [isFlipped, setIsFlipped] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+      <div 
+        className="h-[320px] w-full [perspective:1000px] group"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div 
+          className="h-full w-full float-animation"
+          style={{ 
+            animationPlayState: isHovered || isFlipped ? 'paused' : 'running',
+            willChange: 'transform' 
+          }}
+        >
+          <div
+            className={`relative h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] [transform-style:preserve-3d] ${
+              isFlipped ? "[transform:rotateY(180deg)]" : ""
+            }`}
+          >
+            {/* Front Face */}
+            <div
+              className={`absolute inset-0 h-full w-full rounded-3xl p-8 flex flex-col justify-between [backface-visibility:hidden] border border-white/50 bg-gradient-to-br ${
+                idx === 0
+                  ? "from-blue-50/80 via-indigo-50/50 to-white"
+                  : idx === 1
+                  ? "from-emerald-50/80 via-teal-50/50 to-white"
+                  : "from-orange-50/80 via-amber-50/50 to-white"
+              } material-shadow transition-shadow hover:shadow-2xl hover:border-white/80`}
+              style={{ transform: "translateZ(1px)" }} 
+            >
+              {/* Decorative background blur blobs */}
+              <div
+                className={`absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl opacity-30 ${
+                  idx === 0
+                    ? "bg-blue-400"
+                    : idx === 1
+                    ? "bg-emerald-400"
+                    : "bg-orange-400"
+                }`}
+              ></div>
+
+              <div className="relative z-10">
+                <div className="flex flex-wrap gap-3 mb-5">
+                  {project.tags.map((tag) => {
+                     const getTechStack = (name) => {
+                       switch(name) {
+                         case 'React': return { 
+                           img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", 
+                           color: "shadow-cyan-500/20 border-cyan-100",
+                           tooltipBg: "bg-sky-500"
+                         };
+                         case 'Node.js': return { 
+                           img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", 
+                           color: "shadow-green-500/20 border-green-100",
+                           tooltipBg: "bg-green-600"
+                         };
+                         case 'MongoDB': return { 
+                           img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", 
+                           color: "shadow-emerald-500/20 border-emerald-100",
+                           tooltipBg: "bg-emerald-600"
+                         };
+                         case 'Stripe': return { 
+                           img: "https://cdn.simpleicons.org/stripe/5469d4", 
+                           color: "shadow-indigo-500/20 border-indigo-100",
+                           tooltipBg: "bg-[#5469d4]" // Stripe brand color
+                         };
+                         case 'Vite': return { 
+                           img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg", 
+                           color: "shadow-purple-500/20 border-purple-100",
+                           tooltipBg: "bg-purple-600"
+                         };
+                         case 'Express': return { 
+                           img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", 
+                           color: "shadow-gray-500/20 border-gray-100",
+                           tooltipBg: "bg-slate-700"
+                         };
+                         case 'Rest API': return { 
+                           component: <Globe size={16} className="text-blue-500" />, 
+                           color: "shadow-blue-500/20 border-blue-100",
+                           tooltipBg: "bg-blue-600"
+                         };
+                         case 'Security': return { 
+                           component: <div className="text-rose-500"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>, 
+                           color: "shadow-rose-500/20 border-rose-100",
+                           tooltipBg: "bg-rose-600"
+                         };
+                         default: return { 
+                           component: <Code2 size={16} className="text-slate-400" />, 
+                           color: "shadow-slate-500/20 border-slate-100",
+                           tooltipBg: "bg-slate-600"
+                         };
+                       }
+                     };
+                     
+                     const stack = getTechStack(tag);
+                     
+                     return (
+                       <div
+                         key={tag}
+                         className={`w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-lg border ${stack.color} hover:scale-125 hover:shadow-xl transition-all duration-300 cursor-pointer relative group/icon`}
+                       >
+                         <span className={`absolute -top-8 left-1/2 -translate-x-1/2 text-white text-[10px] font-bold px-2 py-1 rounded-full opacity-0 transform translate-y-2 group-hover/icon:opacity-100 group-hover/icon:translate-y-0 transition-all duration-300 pointer-events-none whitespace-nowrap z-20 shadow-md ${stack.tooltipBg || "bg-slate-800"}`}>
+                           {tag}
+                         </span>
+                         {stack.img ? (
+                            <img src={stack.img} alt={tag} className="w-5 h-5 object-contain" />
+                         ) : (
+                            stack.component
+                         )}
+                       </div>
+                     );
+                  })}
+                </div>
+
+                <h3 className="font-extrabold text-2xl text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors duration-400 ease-out tracking-tight">
+                  {project.title}
+                </h3>
+                
+                <button
+                   onClick={() => setIsFlipped(true)}
+                   className="text-sm font-semibold text-indigo-600 flex items-center gap-1 hover:gap-2 transition-all duration-300 mb-4"
+                >
+                   Expand <ArrowRight size={14} />
+                </button>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-4 relative z-10">
+                <a
+                  href={project.liveLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 bg-slate-900 text-white text-sm font-bold py-3.5 rounded-xl hover:bg-black hover:shadow-lg hover:-translate-y-1 transition-all duration-300 shadow-slate-900/10"
+                >
+                  <Globe size={18} /> <span>Demo</span>
+                </a>
+                <a
+                  href={project.repoLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-700 text-sm font-bold py-3.5 rounded-xl hover:bg-indigo-50 hover:border-indigo-200 hover:text-indigo-700 transition-all duration-300 shadow-sm"
+                >
+                  <Code2 size={18} /> <span>Code</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Back Face */}
+            <div
+              className={`absolute inset-0 h-full w-full rounded-3xl p-8 bg-white border border-indigo-100 material-shadow [backface-visibility:hidden] flex flex-col`}
+              style={{ transform: "rotateY(180deg) translateZ(1px)" }}
+            >
+              <div className="flex justify-between items-start mb-4">
+                 <h3 className="font-bold text-xl text-slate-900">{project.title}</h3>
+                 <button 
+                   onClick={(e) => {
+                      e.stopPropagation();
+                      setIsFlipped(false);
+                   }}
+                   className="p-1 rounded-full hover:bg-slate-100 text-slate-500 transition-colors"
+                 >
+                   <ArrowRight className="rotate-180" size={20}/>
+                 </button>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                 <p className="text-[15px] text-slate-600 leading-relaxed">
+                   {project.desc}
+                 </p>
+              </div>
+              
+               <div className="mt-4 pt-4 border-t border-slate-100 flex justify-center">
+                   <button 
+                     onClick={() => setIsFlipped(false)}
+                     className="text-xs font-bold uppercase tracking-widest text-indigo-500 hover:text-indigo-700 transition-colors"
+                   >
+                     Close Details
+                   </button>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+
   return (
     <div
       className="min-h-screen bg-[#FDFBFF] text-[#1B1B1F] pb-20 overflow-x-hidden"
@@ -225,6 +409,11 @@ const NotionPortfolio = () => {
         
         .float-animation {
           animation: float 6s ease-in-out infinite;
+          will-change: transform;
+        }
+        
+        .float-animation:hover {
+          animation-play-state: paused;
         }
         
         @keyframes float {
@@ -235,31 +424,25 @@ const NotionPortfolio = () => {
       `}</style>
 
       {/* Top Navigation Bar - Material App Bar Style */}
-      <div className="h-14 flex items-center justify-between px-6 sticky top-0 bg-white/90 backdrop-blur-md z-50 border-b border-gray-100 shadow-sm">
-        <div className="flex items-center gap-3 text-sm">
+      <div className="group h-16 flex items-center justify-between px-6 fixed top-4 left-1/2 -translate-x-1/2 w-[400px] hover:w-[530px] bg-white z-50 border border-gray-100 shadow-xl shadow-black/5 rounded-full transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden">
+        <div className="flex items-center gap-3 text-sm shrink-0">
           <span className="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md cursor-pointer hover:scale-110 transition-transform duration-300 ease-out">
             A
           </span>
-          <span className="font-semibold text-gray-800 tracking-tight">
+          <span className="font-extrabold text-black tracking-tight whitespace-nowrap">
             ayush-kumar / portfolio
           </span>
         </div>
-        <div className="flex gap-6 text-sm font-medium text-gray-600 items-center">
-          <a
-            href="#contact"
-            className="hover:text-black transition-colors duration-300 hidden sm:block relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-black after:origin-bottom-right after:transition-transform after:duration-500 after:ease-out hover:after:scale-x-100 hover:after:origin-bottom-left"
-          >
-            Contact
-          </a>
+        <div className="flex gap-6 items-center shrink-0">
           <a
             href="/CV.pdf" // Ensure Resume.pdf is in your 'public' folder
             download="Ayush_Kumar_CV.pdf"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 hover:scale-105 transition-all duration-300 ease-out material-btn"
+            className="flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-full hover:bg-gray-900 hover:scale-105 transition-all duration-300 ease-out material-btn shadow-lg shadow-black/20"
           >
             <Download size={16} />
-            <span>CV</span>
+            <span className="font-bold">CV</span>
           </a>
         </div>
       </div>
@@ -290,10 +473,6 @@ const NotionPortfolio = () => {
                     }}
                   />
                 </div>
-                <div
-                  className="absolute bottom-2 right-2 w-6 h-6 bg-green-500 border-4 border-white rounded-full"
-                  title="Available for work"
-                ></div>
               </div>
 
               <div className="flex-1 w-full">
@@ -304,103 +483,44 @@ const NotionPortfolio = () => {
                   {profile.tagline}
                 </p>
 
+                <p className="text-[#444746] leading-relaxed text-lg font-light mb-8 max-w-3xl">
+                  {profile.summary}
+                </p>
+
                 {/* Meta Data Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8 text-sm text-gray-600">
-                  <div className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-300 ease-out">
-                    <div className="w-5 mt-0.5 text-gray-400">
-                      <Layout size={18} />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-xs font-medium text-[#5E5E62] uppercase tracking-wider">
-                        Role
-                      </span>
-                      <span className="font-bold text-[15px] pastel-gradient-text">
-                        {profile.role}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div
-                    className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-300 ease-out cursor-pointer"
-                    onClick={handleCopyEmail}
-                  >
-                    <div className="w-5 mt-0.5 text-gray-400">
-                      <Mail size={18} />
-                    </div>
-                    <div className="flex flex-col overflow-hidden">
-                      <span className="text-xs font-medium text-[#5E5E62] uppercase tracking-wider">
-                        Email
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-[#1B1B1F] truncate">
-                          {profile.email}
-                        </span>
-                        {copied && (
-                          <Check size={14} className="text-green-500" />
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-300 ease-out">
-                    <div className="w-5 mt-0.5 text-gray-400">
-                      <MapPin size={18} />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-xs font-medium text-[#5E5E62] uppercase tracking-wider">
-                        Location
-                      </span>
-                      <span className="font-medium text-[#1B1B1F]">
-                        {profile.location}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-300 ease-out">
-                    <div className="w-5 mt-0.5 text-gray-400">
-                      <Globe size={18} />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-xs font-medium text-[#5E5E62] uppercase tracking-wider">
-                        Socials
-                      </span>
-                      <div className="flex gap-3 mt-1">
-                        <a
-                          href={profile.socials.github}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="hover:text-black hover:scale-110 transition-all duration-300 ease-out"
-                        >
-                          <Github size={18} />
-                        </a>
-                        <a
-                          href={profile.socials.linkedin}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="hover:text-blue-600 hover:scale-110 transition-all duration-300 ease-out"
-                        >
-                          <Linkedin size={18} />
-                        </a>
-                      </div>
+                <div className="flex flex-col gap-4 mt-2">
+                  {/* Connect Item - Minimalist */}
+                  <div className="flex flex-col">
+                    <span className="text-sm font-black text-indigo-600 uppercase tracking-widest mb-3">
+                      Connect
+                    </span>
+                    <div className="flex gap-3">
+                      <a
+                        href={profile.socials.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-indigo-100 text-slate-600 hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:scale-110 transition-all duration-300 shadow-sm"
+                      >
+                        <Github size={20} />
+                      </a>
+                      <a
+                        href={profile.socials.linkedin}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-indigo-100 text-blue-600 hover:bg-[#0077b5] hover:text-white hover:border-[#0077b5] hover:scale-110 transition-all duration-300 shadow-sm"
+                      >
+                        <Linkedin size={20} />
+                      </a>
+                      <a
+                        href={`mailto:${profile.email}`}
+                        className="flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-t-[#EA4335] border-r-[#4285F4] border-b-[#34A853] border-l-[#FBBC05] hover:scale-110 transition-all duration-300 shadow-sm group/mail"
+                      >
+                         <Mail size={20} className="text-slate-600 group-hover/mail:text-slate-900" />
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </FadeIn>
-
-        {/* About Section */}
-        <FadeIn delay={200}>
-          <div className="mb-16">
-            <h3 className="text-2xl font-normal text-[#1B1B1F] mb-6 flex items-center gap-3">
-              <span className="w-1.5 h-8 bg-indigo-600 rounded-r-full"></span>
-              About Me
-            </h3>
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 material-shadow">
-              <p className="text-[#444746] leading-relaxed text-lg font-light">
-                {profile.summary}
-              </p>
             </div>
           </div>
         </FadeIn>
@@ -417,65 +537,7 @@ const NotionPortfolio = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, idx) => (
               <FadeIn key={idx} delay={400 + idx * 100}>
-                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 material-shadow flex flex-col h-full group">
-                  {/* Project Cover Image */}
-                  <div className="h-48 w-full overflow-hidden relative bg-gray-100">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover object-top transition-transform duration-[800ms] ease-out group-hover:scale-110"
-                      onError={(e) => {
-                        e.target.src =
-                          "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop";
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 ease-out" />
-                  </div>
-
-                  {/* Project Content */}
-                  <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      {project.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 bg-slate-50 text-slate-600 text-[10px] font-bold uppercase tracking-wider rounded-md border border-slate-100"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <h3 className="font-bold text-xl text-[#1B1B1F] mb-2 group-hover:text-indigo-600 transition-colors duration-400 ease-out">
-                      {project.title}
-                    </h3>
-
-                    <p className="text-sm text-[#444746] mb-6 leading-relaxed line-clamp-2 font-light">
-                      {project.desc}
-                    </p>
-
-                    {/* Action Buttons */}
-                    <div className="flex gap-3 mt-auto">
-                      <a
-                        href={project.liveLink}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex-1 flex items-center justify-center gap-2 bg-[#1B1B1F] text-white text-sm font-medium py-3 rounded-xl hover:bg-black hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 material-btn"
-                      >
-                        <Globe size={16} />{" "}
-                        <span className="tracking-wide">Demo</span>
-                      </a>
-                      <a
-                        href={project.repoLink}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex-1 flex items-center justify-center gap-2 bg-white border border-slate-200 text-[#444746] text-sm font-medium py-3 rounded-xl hover:bg-slate-50 hover:border-indigo-200 hover:text-indigo-600 transition-all duration-300 material-btn"
-                      >
-                        <Code2 size={16} />{" "}
-                        <span className="tracking-wide">Code</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+                <ProjectCard project={project} idx={idx} />
               </FadeIn>
             ))}
           </div>
