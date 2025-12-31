@@ -179,21 +179,19 @@ const NotionPortfolio = () => {
 
   const ProjectCard = ({ project, idx }) => {
     const [isFlipped, setIsFlipped] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
 
     return (
       <div 
         className="h-[320px] w-full [perspective:1000px] group"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
-        <div 
-          className="h-full w-full float-animation"
-          style={{ 
-            animationPlayState: isHovered || isFlipped ? 'paused' : 'running',
-            willChange: 'transform' 
-          }}
-        >
+        <div className="h-full w-full transition-transform duration-500 group-hover:scale-[1.04]">
+          <div 
+            className="h-full w-full float-animation"
+            style={{ 
+              animationPlayState: isFlipped ? 'paused' : undefined,
+              willChange: 'transform' 
+            }}
+          >
           <div
             className={`relative h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] [transform-style:preserve-3d] ${
               isFlipped ? "[transform:rotateY(180deg)]" : ""
@@ -302,7 +300,8 @@ const NotionPortfolio = () => {
                    onClick={() => setIsFlipped(true)}
                    className="text-sm font-semibold text-indigo-600 flex items-center gap-1 hover:gap-2 transition-all duration-300 mb-4"
                 >
-                   Expand <ArrowRight size={14} />
+                   <span className="group-hover:hidden">Expand</span>
+                   <span className="hidden group-hover:inline">Flip</span> <ArrowRight size={14} />
                 </button>
               </div>
 
@@ -361,6 +360,7 @@ const NotionPortfolio = () => {
                </div>
             </div>
           </div>
+          </div>
         </div>
       </div>
     );
@@ -412,14 +412,24 @@ const NotionPortfolio = () => {
           will-change: transform;
         }
         
-        .float-animation:hover {
-          animation-play-state: paused;
+        @media (hover: hover) {
+          .float-animation:hover {
+            animation-play-state: paused;
+          }
         }
         
         @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-          100% { transform: translateY(0px); }
+          0% { transform: translate3d(0, 0px, 0); }
+          50% { transform: translate3d(0, -10px, 0); }
+          100% { transform: translate3d(0, 0px, 0); }
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
 
@@ -499,7 +509,7 @@ const NotionPortfolio = () => {
                         href={profile.socials.github}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-indigo-100 text-slate-600 hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:scale-110 transition-all duration-300 shadow-sm"
+                        className="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-indigo-100 text-slate-600 hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:scale-110 hover:rotate-12 transition-all duration-300 shadow-sm"
                       >
                         <Github size={20} />
                       </a>
@@ -507,13 +517,13 @@ const NotionPortfolio = () => {
                         href={profile.socials.linkedin}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-indigo-100 text-blue-600 hover:bg-[#0077b5] hover:text-white hover:border-[#0077b5] hover:scale-110 transition-all duration-300 shadow-sm"
+                        className="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-indigo-100 text-blue-600 hover:bg-[#0077b5] hover:text-white hover:border-[#0077b5] hover:scale-110 hover:rotate-12 transition-all duration-300 shadow-sm"
                       >
                         <Linkedin size={20} />
                       </a>
                       <a
                         href={`mailto:${profile.email}`}
-                        className="flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-t-[#EA4335] border-r-[#4285F4] border-b-[#34A853] border-l-[#FBBC05] hover:scale-110 transition-all duration-300 shadow-sm group/mail"
+                        className="flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-t-[#EA4335] border-r-[#4285F4] border-b-[#34A853] border-l-[#FBBC05] hover:scale-110 hover:rotate-12 transition-all duration-300 shadow-sm group/mail"
                       >
                          <Mail size={20} className="text-slate-600 group-hover/mail:text-slate-900" />
                       </a>
@@ -534,9 +544,9 @@ const NotionPortfolio = () => {
             </h3>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 overflow-x-auto md:overflow-visible pb-12 px-6 -mx-6 md:px-0 md:mx-0 snap-x snap-mandatory hide-scrollbar">
             {projects.map((project, idx) => (
-              <FadeIn key={idx} delay={400 + idx * 100}>
+              <FadeIn key={idx} delay={400 + idx * 100} className="min-w-[85vw] sm:min-w-[350px] md:min-w-0 snap-center">
                 <ProjectCard project={project} idx={idx} />
               </FadeIn>
             ))}
@@ -688,7 +698,7 @@ const NotionPortfolio = () => {
               </div>
 
               {/* Right: Form Visual */}
-              <div className="p-8 lg:w-3/5 bg-white">
+              <div className="hidden lg:block p-8 lg:w-3/5 bg-white">
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-2">
