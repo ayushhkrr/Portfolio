@@ -434,7 +434,7 @@ const NotionPortfolio = () => {
       `}</style>
 
       {/* Top Navigation Bar - Material App Bar Style */}
-      <div className="group h-16 flex items-center justify-between px-6 fixed top-4 left-1/2 -translate-x-1/2 w-[400px] hover:w-[530px] bg-white z-50 border border-gray-100 shadow-xl shadow-black/5 rounded-full transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden">
+      <div className="group h-16 flex items-center justify-between px-6 fixed top-4 left-1/2 -translate-x-1/2 w-[95%] sm:w-[400px] md:hover:w-[530px] bg-white z-50 border border-gray-100 shadow-xl shadow-black/5 rounded-full transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden">
         <div className="flex items-center gap-3 text-sm shrink-0">
           <span className="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md cursor-pointer hover:scale-110 transition-transform duration-300 ease-out">
             A
